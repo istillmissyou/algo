@@ -2,10 +2,10 @@ from typing import List
 
 
 def nearest_zero(number_list: List[int]) -> List[int]:
-    number_plots = len(number_list)
-    result = [0] * number_plots
-    zero_indices = [i for i in range(number_plots) if number_list[i] == 0]
-    for i in range(zero_indices[0], number_plots):
+    house_number = len(number_list)
+    result = [0] * house_number
+    zero_indices = [i for i in range(house_number) if number_list[i] == 0]
+    for i in range(zero_indices[0], house_number):
         if number_list[i] == 0:
             result[i] = 0
         else:
