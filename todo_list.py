@@ -1,3 +1,5 @@
+'''connected list'''
+
 LOCAL = False
 
 if LOCAL:
