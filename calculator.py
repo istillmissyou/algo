@@ -16,14 +16,11 @@ class Stack:
     def __init__(self):
         self.__items = []
 
-    def is_empty(self):
-        return len(self.__items) == 0
-
     def push(self, item):
         self.__items.append(item)
 
     def pop(self):
-        if self.is_empty():
+        if len(self.__items) == 0:
             raise EmptyError()
         return self.__items.pop()
 
