@@ -6,15 +6,26 @@ OPERATORS = {
 }
 
 
+class EmptyError(Exception):
+    def __init__(self) -> None:
+        self.message = 'Stack is empty'
+        super().__init__(self.message)
+
+
 class Stack:
     def __init__(self):
-        self.items = []
+        self.__items = []
+
+    def is_empty(self):
+        return len(self.__items) == 0
 
     def push(self, item):
-        self.items.append(item)
+        self.__items.append(item)
 
     def pop(self):
-        return self.items.pop()
+        if self.is_empty():
+            raise EmptyError()
+        return self.__items.pop()
 
 
 def read_input() -> list:
@@ -30,6 +41,8 @@ def calculator(expression: list) -> int:
         except ValueError:
             num_1, num_2 = int(stack.pop()), int(stack.pop())
             stack.push(OPERATORS[symbols](num_2, num_1))
+        except EmptyError:
+            print('Стек пуст!')
     return stack.pop()
 
 
