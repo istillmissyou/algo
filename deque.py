@@ -1,4 +1,4 @@
-class OverflowError(Exception):
+class CustomOverflowError(Exception):
     def __init__(self) -> None:
         self.message = 'Deque is overflow'
         super().__init__(self.message)
@@ -12,7 +12,7 @@ class EmptyError(Exception):
 
 class Deque:
     def __init__(self, max_size: int) -> None:
-        self.__queue = [None] * max_size
+        self.__list = [None] * max_size
         self.__max_n: int = max_size
         self.__head: int = 0
         self.__tail: int = 0
@@ -26,23 +26,23 @@ class Deque:
 
     def push_back(self, value: int) -> None:
         if self.is_overflowed():
-            raise OverflowError()
-        self.__queue[self.__tail] = value
+            raise CustomOverflowError()
+        self.__list[self.__tail] = value
         self.__tail = (self.__tail + 1) % self.__max_n
         self.__size += 1
 
     def push_front(self, value: int) -> None:
         if self.is_overflowed():
-            raise OverflowError()
+            raise CustomOverflowError()
         head_front = self.__head - 1
-        self.__queue[head_front] = value
+        self.__list[head_front] = value
         self.__head = (head_front) % self.__max_n
         self.__size += 1
 
     def pop_front(self) -> int:
         if self.is_empty():
             raise EmptyError()
-        value = self.__queue[self.__head]
+        value = self.__list[self.__head]
         self.__head = (self.__head + 1) % self.__max_n
         self.__size -= 1
         return value
@@ -51,7 +51,7 @@ class Deque:
         if self.is_empty():
             raise EmptyError()
         tail_back = self.__tail - 1
-        value = self.__queue[tail_back]
+        value = self.__list[tail_back]
         self.__tail = (tail_back) % self.__max_n
         self.__size -= 1
         return value
@@ -67,14 +67,14 @@ if __name__ == '__main__':
         if len(command) > 1:
             try:
                 getattr(deque, command[0])(value=command[1])
-            except OverflowError:
+            except CustomOverflowError:
                 print('error')
             except EmptyError:
                 print('error')
         else:
             try:
                 print(getattr(deque, command[0])())
-            except OverflowError:
+            except CustomOverflowError:
                 print('error')
             except EmptyError:
                 print('error')
